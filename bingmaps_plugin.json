@@ -1,0 +1,9 @@
+{
+    "Keys": ["bingmaps"],
+    "Provider": "bingmaps",
+    "Version": 100,
+    "Experimental": false,
+    "Features": [
+        "OnlineMappingFeature"
+    ]
+}

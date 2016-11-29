@@ -45,7 +45,10 @@ QGeoTiledMappingManagerEngineBingmaps::QGeoTiledMappingManagerEngineBingmaps(con
     QGeoTileFetcherBingmaps *fetcher = new QGeoTileFetcherBingmaps(parameters, this, tileSize());
     setTileFetcher(fetcher);
 
-    m_cacheDirectory = QAbstractGeoTileCache::baseCacheDirectory() + QLatin1String("bingmaps");
+    if (parameters.contains(QStringLiteral("bingmaps.cachefolder")))
+        m_cacheDirectory = parameters.value(QStringLiteral("bingmaps.cachefolder")).toString().toLatin1();
+    else
+        m_cacheDirectory = QAbstractGeoTileCache::baseCacheDirectory() + QLatin1String("bingmaps");
 
     QAbstractGeoTileCache *tileCache = new QGeoFileTileCache(m_cacheDirectory);
     setTileCache(tileCache);

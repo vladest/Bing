@@ -1,4 +1,4 @@
-#include "QtLocation/private/qgeocameracapabilities_p.h"
+﻿#include "QtLocation/private/qgeocameracapabilities_p.h"
 #include "qgeotiledmappingmanagerenginebingmaps.h"
 #include "qgeotiledmapbingmaps.h"
 #include "qgeotilefetcherbingmaps.h"
@@ -36,9 +36,19 @@ QGeoTiledMappingManagerEngineBingmaps::QGeoTiledMappingManagerEngineBingmaps(con
     setTileSize(QSize(tile, tile));
 
     QList<QGeoMapType> types;
+#if QT_VERSION < QT_VERSION_CHECK(5,9,0)
     types << QGeoMapType(QGeoMapType::StreetMap,"Bing Street Map", "Bing street map", false, false, 1);
     types << QGeoMapType(QGeoMapType::SatelliteMapDay, "Bing Satellite Map", "Bing satellite map", false, false, 2);
     types << QGeoMapType(QGeoMapType::HybridMap, "Bing Hybrid Map", "Bing hybrid map", false, false, 3);
+#elif QT_VERSION < QT_VERSION_CHECK(5,10,0)
+    types << QGeoMapType(QGeoMapType::StreetMap,"Bing Street Map", "Bing street map", false, false, 1, "bingmaps");
+    types << QGeoMapType(QGeoMapType::SatelliteMapDay, "Bing Satellite Map", "Bing satellite map", false, false, 2, "bingmaps");
+    types << QGeoMapType(QGeoMapType::HybridMap, "Bing Hybrid Map", "Bing hybrid map", false, false, 3, "bingmaps");
+#else
+    types << QGeoMapType(QGeoMapType::StreetMap,"Bing Street Map", "Bing street map", false, false, 1, "bingmaps", capabilities, parameters);
+    types << QGeoMapType(QGeoMapType::SatelliteMapDay, "Bing Satellite Map", "Bing satellite map", false, false, 2, "bingmaps", capabilities, parameters);
+    types << QGeoMapType(QGeoMapType::HybridMap, "Bing Hybrid Map", "Bing hybrid map", false, false, 3, "bingmaps", capabilities, parameters);
+#endif
 
     setSupportedMapTypes(types);
 
